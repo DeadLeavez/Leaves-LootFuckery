@@ -1,24 +1,24 @@
-import { DependencyContainer } from "tsyringe";
+import type { DependencyContainer } from "tsyringe";
 
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { VFS } from "@spt-aki/utils/VFS"
+import type { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import type { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import type { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import type { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import type { VFS } from "@spt-aki/utils/VFS"
 
 import { jsonc } from "jsonc";
-import * as path from "path";
+import * as path from "node:path";
 
 //Location
-import { LocationController } from "@spt-aki/controllers/LocationController";
-import { IGetLocationRequestData } from "@spt-aki/models/eft/location/IGetLocationRequestData";
-import { ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
+import type { LocationController } from "@spt-aki/controllers/LocationController";
+import type { IGetLocationRequestData } from "@spt-aki/models/eft/location/IGetLocationRequestData";
+import type { ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
 
 //Mod setup
-import { OnLoadModService } from "@spt-aki/services/mod/onLoad/OnLoadModService";
-import { IPreAkiLoadMod } from "@spt-aki/models/external/IPreAkiLoadMod";
-import { IPostDBLoadMod } from "@spt-aki/models/external/IPostDBLoadMod";
-import { PreAkiModLoader } from "@spt-aki/loaders/PreAkiModLoader";
+import type { OnLoadModService } from "@spt-aki/services/mod/onLoad/OnLoadModService";
+import type { IPreAkiLoadMod } from "@spt-aki/models/external/IPreAkiLoadMod";
+import type { IPostDBLoadMod } from "@spt-aki/models/external/IPostDBLoadMod";
+import type { PreAkiModLoader } from "@spt-aki/loaders/PreAkiModLoader";
 import { LogTextColor } from "@spt-aki/models/spt/logging/LogTextColor";
 
 class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
@@ -54,7 +54,7 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
         // get output directory for generated files
         // "Leaves-LootFuckery" is the directory name of the mod
         const preAkiModLoader = container.resolve<PreAkiModLoader>( "PreAkiModLoader" );
-        this.outputFolder = preAkiModLoader.getModPath( "Leaves-LootFuckery" ) + "output/";
+        this.outputFolder = `${preAkiModLoader.getModPath( "Leaves-LootFuckery" )}output/`;
 
         this.locationControl = container.resolve<LocationController>( "LocationController" );
     }
@@ -107,7 +107,7 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
             this.actualRun = true;
 
             //Do stuff
-            this.generateMap( name + "_actual_run" );
+            this.generateMap( `${name}_actual_run` );
 
             this.actualRun = false;
         }
@@ -123,7 +123,7 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
            dict: ["string"]: { "total": number, "max": number }
            arr:  [ ["string", { "total": number, "max": number }], ... ]
         */
-        let items = [];
+        const items = [];
 
         for ( const key in dict )
         {
@@ -140,14 +140,14 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
         //The sort and arrayify leaves the data stored in an array of arrays. Each sub-array is 2 elements long, the first element is the ID string. 
         //the second element is an object with two data points. total, and max
 
-        let fixed = {};
+        const fixed = {};
         for ( const item of items )
         {
             // item[0] is ID
             //      item[1].max
             //      item[1].total 
 
-            let data = { total: item[ 1 ].total, max: item[ 1 ].max }
+            const data = { total: item[ 1 ].total, max: item[ 1 ].max }
 
             fixed[ item[ 0 ] ] = data;
         }
@@ -155,7 +155,7 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
         return fixed;
     }
 
-    private writeResult ( prefix: string, data: any, extension: string = ".json" ): void
+    private writeResult ( prefix: string, data: any, extension = ".json" ): void
     {
         // get formatted text to save
         const text = ( this.config.convertToCompact )
@@ -165,11 +165,11 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
         // get file name
         const date = this.timeUtil.getDate();
         const time = this.timeUtil.getTime();
-        const fileName = this.outputFolder + prefix + "_" + date + "_" + time + extension;
+        const fileName = `${this.outputFolder + prefix}_${date}_${time}${extension}`;
 
         // save file
         this.vfs.writeFile( fileName, text );
-        this.logger.info( "Written results to: " + fileName );
+        this.logger.info( `Written results to: ${fileName}` );
     }
 
     public OnLoad ( logger: ILogger ): void
@@ -207,7 +207,7 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
 
     private generateLoot ( map: string ): any
     {
-        const accountID = "DOESNT MATTER IN 3.7.1";
+        const accountID = "DOESN'T MATTER IN 3.8.2";
         const request: IGetLocationRequestData =
         {
             crc: 0,
@@ -300,7 +300,7 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
 
     private categorize ( lootTable: any ): any 
     {
-        let categoryTable = {};
+        const categoryTable = {};
 
 
         const tables = this.db.getTables();
@@ -309,7 +309,7 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
 
         if ( !locale )
         {
-            this.printColor( "[LootFuckery]: Localization: \"" + this.config.localization + "\" does not exist! Exiting!", LogTextColor.RED );
+            this.printColor( `[LootFuckery]: Localization: \"${this.config.localization}\" does not exist! Exiting!`, LogTextColor.RED );
             return;
         }
 
@@ -327,7 +327,7 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
                 if ( this.config.convertToName )
                 {
                     const name = this.config.localizeNames
-                        ? locale[ item + " Name" ]
+                        ? locale[ `${item} Name` ]
                         : items[ item ]._name;
 
                     temp[ name ] = lootTable[ item ];
@@ -346,7 +346,7 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
 
     private generateRuns ( mapToGenerate: string ): any
     {
-        let lootTable = {};
+        const lootTable = {};
 
         let currentRun = {};
 
@@ -444,7 +444,7 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
 
         if ( this.config.convertToName )
         {
-            let prettyTable = {};
+            const prettyTable = {};
 
             for ( const item in lootTable )
             {
@@ -456,7 +456,7 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
             lootTable = prettyTable;
         }
 
-        this.writeResult( "loot_" + mapToGenerate + "_-", lootTable );
+        this.writeResult( `loot_${mapToGenerate}_-`, lootTable );
     }
 
     private editProbabilities (): void
@@ -469,7 +469,7 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
 
         for ( const locationName of locationNames )
         {
-            this.printColor( "[LootFuckery] Adjusting: " + locationName, LogTextColor.YELLOW );
+            this.printColor( `[LootFuckery] Adjusting: ${locationName}`, LogTextColor.YELLOW );
 
             const location = tables.locations[ locationName ];
             location.looseLoot.spawnpointCount.mean *= this.lootConfig.mapSpecific[ locationName ].totalLootMultiplier;
@@ -485,7 +485,7 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
 
     private getLocationNames (): string[]
     {
-        let locationNames = [];
+        const locationNames = [];
         const locations = this.db.getTables().locations;
 
         for ( const locationName in locations )
@@ -503,15 +503,15 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
 
     private getItemFormatted ( id: string, value: any ): string
     {
-        let total = value.total;
-        let avg = value.total / this.config.timesToGenerate;
-        let max = value.max;
+        const total = value.total;
+        const avg = value.total / this.config.timesToGenerate;
+        const max = value.max;
 
         if ( this.actualRun )
         {
-            return "\"" + id + "\": Total:" + total;
+            return `\"${id}\": Total:${total}`;
         }
-        return "\"" + id + "\": Avg:" + avg + " | Max:" + max;
+        return `\"${id}\": Avg:${avg} | Max:${max}`;
     }
 
     private jsonToText ( json: any ): string
@@ -529,7 +529,7 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
                 // ID: category
                 // json[ID]: an array of { itemID: value }
 
-                text += tab1 + "[" + ID + "]" + nl;
+                text += `${tab1}[${ID}]${nl}`;
 
                 for ( const entry of json[ ID ] )
                 {
@@ -550,13 +550,13 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
         return text;
     }
 
-    private debugJsonOutput ( jsonObject: any, label: string = "" )
+    private debugJsonOutput ( jsonObject: any, label = "" )
     {
         //if ( this.config.debug )
         //{
         if ( label.length > 0 )
         {
-            this.logger.logWithColor( "[" + label + "]", LogTextColor.GREEN );
+            this.logger.logWithColor( `[${label}]`, LogTextColor.GREEN );
         }
         this.logger.logWithColor( JSON.stringify( jsonObject, null, 4 ), LogTextColor.MAGENTA );
         //}
