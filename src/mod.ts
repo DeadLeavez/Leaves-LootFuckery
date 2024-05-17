@@ -224,7 +224,7 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
         const itemTable = this.db.getTables().templates.items;
 
         const globalCategories = this.lootConfig.globalCategories;
-        const globalItems = this.lootConfig.globalItems;
+        const globalItems = this.lootConfig.globalItems.items;
         const mapCategories = this.lootConfig.mapSpecific[ map ].categories;
         const mapItems = this.lootConfig.mapSpecific[ map ].items;
 
