@@ -207,7 +207,7 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
 
     private generateLoot ( map: string ): any
     {
-        const accountID = "DOESN'T MATTER IN 3.8.2";
+        const accountID = "DOESN'T MATTER IN 3.8.3";
         const request: IGetLocationRequestData =
         {
             crc: 0,
