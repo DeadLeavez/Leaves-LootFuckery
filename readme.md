@@ -68,3 +68,12 @@ Any errors that look like below, while scary looking, are completely harmless. I
 ```log
 [LootFuckery] Found item without matching parent: 5cc9c20cd7f00c001336c65d - Parent: LightLaser -ID: 55818b0e4bdc2dde698b456e
 ```
+
+## 1.3.2
+
+- Fixes global items. Thanks dj346
+- Made the mod adhere to package.json specifications
+
+Config files made for 1.3.1 ARE Compatible.
+MOD FOLDER HAS BEEN RENAMED. REMOVE THE OLD ONE AFTER COPYING OVER CONFIG FILES!
+Remember to REMOVE the old folder or you will get issues.

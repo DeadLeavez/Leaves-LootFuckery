@@ -238,7 +238,7 @@
             "items": //1st Priority (Highest)
             {
                 "5c1d0c5f86f7744bb2683cf0": { "multi": 0.8 }, //Blue Keycard
-                "5c1d0efb86f7744baf2e7b7b": { "multi": 0.3  } //Red Keycard
+                "5c1d0efb86f7744baf2e7b7b": { "multi": 0.3 } //Red Keycard
             }
         },
 
