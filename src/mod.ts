@@ -54,7 +54,7 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
         // get output directory for generated files
         // "Leaves-LootFuckery" is the directory name of the mod
         const preAkiModLoader = container.resolve<PreAkiModLoader>( "PreAkiModLoader" );
-        this.outputFolder = `${preAkiModLoader.getModPath( "Leaves-LootFuckery" )}output/`;
+        this.outputFolder = `${preAkiModLoader.getModPath( "leaves-loot_fuckery" )}output/`;
 
         this.locationControl = container.resolve<LocationController>( "LocationController" );
     }
