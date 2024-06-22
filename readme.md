@@ -77,3 +77,11 @@ Any errors that look like below, while scary looking, are completely harmless. I
 Config files made for 1.3.1 ARE Compatible.
 MOD FOLDER HAS BEEN RENAMED. REMOVE THE OLD ONE AFTER COPYING OVER CONFIG FILES!
 Remember to REMOVE the old folder or you will get issues.
+
+## 1.3.2HOTFIX
+
+- Fixed output folder being the old path.
+
+## 1.3.3
+
+- Fixed error when bad data is present in loot data.
