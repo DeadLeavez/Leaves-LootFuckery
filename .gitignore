@@ -14,6 +14,7 @@ dist/
 *.iml
 .vscode/
 package-lock.json
+redirect.jsonc
 
 # System Files
 .DS_Store
