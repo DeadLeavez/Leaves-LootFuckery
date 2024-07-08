@@ -1,27 +1,27 @@
 import type { DependencyContainer } from "tsyringe";
 
-import type { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import type { JsonUtil } from "@spt-aki/utils/JsonUtil";
-import type { TimeUtil } from "@spt-aki/utils/TimeUtil";
-import type { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import type { VFS } from "@spt-aki/utils/VFS"
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { JsonUtil } from "@spt/utils/JsonUtil";
+import type { TimeUtil } from "@spt/utils/TimeUtil";
+import type { DatabaseServer } from "@spt/servers/DatabaseServer";
+import type { VFS } from "@spt/utils/VFS"
 
 import { jsonc } from "jsonc";
 import * as path from "node:path";
 
 //Location
-import type { LocationController } from "@spt-aki/controllers/LocationController";
-import type { IGetLocationRequestData } from "@spt-aki/models/eft/location/IGetLocationRequestData";
-import type { ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
+import type { LocationController } from "@spt/controllers/LocationController";
+import type { IGetLocationRequestData } from "@spt/models/eft/location/IGetLocationRequestData";
+import type { ILocationBase } from "@spt/models/eft/common/ILocationBase";
 
 //Mod setup
-import type { OnLoadModService } from "@spt-aki/services/mod/onLoad/OnLoadModService";
-import type { IPreAkiLoadMod } from "@spt-aki/models/external/IPreAkiLoadMod";
-import type { IPostDBLoadMod } from "@spt-aki/models/external/IPostDBLoadMod";
-import type { PreAkiModLoader } from "@spt-aki/loaders/PreAkiModLoader";
-import { LogTextColor } from "@spt-aki/models/spt/logging/LogTextColor";
+import type { OnLoadModService } from "@spt/services/mod/onLoad/OnLoadModService";
+import type { IPreSptLoadMod } from "@spt/models/external/IPreSptLoadMod";
+import type { IPostDBLoadMod } from "@spt/models/external/IPostDBLoadMod";
+import type { PreSptModLoader } from "@spt/loaders/PreSptModLoader";
+import { LogTextColor } from "@spt/models/spt/logging/LogTextColor";
 
-class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
+class LootFuckery implements IPostDBLoadMod, IPreSptLoadMod
 {
     private logger: ILogger;
     private jsonUtil: JsonUtil;
@@ -53,13 +53,13 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
 
         // get output directory for generated files
         // "Leaves-LootFuckery" is the directory name of the mod
-        const preAkiModLoader = container.resolve<PreAkiModLoader>( "PreAkiModLoader" );
-        this.outputFolder = `${ preAkiModLoader.getModPath( "leaves-loot_fuckery" ) }output/`;
+        const preSptModLoader = container.resolve<PreSptModLoader>( "PreSptModLoader" );
+        this.outputFolder = `${ preSptModLoader.getModPath( "leaves-loot_fuckery" ) }output/`;
 
         this.locationControl = container.resolve<LocationController>( "LocationController" );
     }
 
-    public preAkiLoad( container: DependencyContainer ): void
+    public preSptLoad( container: DependencyContainer ): void
     {
         const logger = container.resolve<ILogger>( "WinstonLogger" );
         const onLoadModService = container.resolve<OnLoadModService>( "OnLoadModService" );
@@ -492,7 +492,7 @@ class LootFuckery implements IPostDBLoadMod, IPreAkiLoadMod
             this.printColor( `[LootFuckery] Adjusting: ${ locationName }`, LogTextColor.YELLOW );
 
             const location = tables.locations[ locationName ];
-            location.looseLoot.spawnpointCount.mean *= this.lootConfig.mapSpecific[ locationName ].totalLootMultiplier;
+            location.looseLoot.spawnpointCount.mean *= this.lootConfig.mapSpecific[ locationName ].totalLootMultiplier; // <-- THIS DOESNT EXIST ANYMORE!?
 
             const spawnPoints = location.looseLoot.spawnpoints;
             for ( const point of spawnPoints )

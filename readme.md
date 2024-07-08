@@ -93,3 +93,10 @@ Remember to REMOVE the old folder or you will get issues.
 
 Config file has had ``"HarmlessErrorLogging": true`` added, but it defaults to being false if not present. 
 Config files from previous versions ARE compatible.
+
+## 1.4.0
+
+- Updated to 3.9.0
+- Set all loot values to 1.0 (no changes being made). This has been done because I don't plan to update relooted. The old config is still included.
+
+Old Config files ARE compatible.
