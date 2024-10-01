@@ -1,7 +1,7 @@
 {
     "editProbabilities": true,      //Main enabling of the mod. 
 
-    "dataDumpRealRuns": false,      //Dumps data before each run
+    //"dataDumpRealRuns": false,      //Dumps data before each run DISABLED FOR NOW
     "dataDump": true,              //Dumps data on server start
     "categorize": true,             //Categorizes the data dump
     "convertToCompact": true,       //Makes the output more compact
