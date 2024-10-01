@@ -11,6 +11,7 @@ import * as path from "node:path";
 
 //Location
 import type { LocationController } from "@spt/controllers/LocationController";
+import type { LocationLifecycleService } from "@spt/services/LocationLifecycleService";
 import type { IGetLocationRequestData } from "@spt/models/eft/location/IGetLocationRequestData";
 import type { ILocationBase } from "@spt/models/eft/common/ILocationBase";
 
@@ -34,7 +35,7 @@ class LootFuckery implements IPostDBLoadMod, IPreSptLoadMod
     private actualRunData: any;
 
     private db: DatabaseServer;
-    private locationControl: LocationController;
+    private locationLifecycleService: LocationLifecycleService;
 
     //Config
     private config: any;
@@ -56,7 +57,7 @@ class LootFuckery implements IPostDBLoadMod, IPreSptLoadMod
         const preSptModLoader = container.resolve<PreSptModLoader>( "PreSptModLoader" );
         this.outputFolder = `${ preSptModLoader.getModPath( "leaves-loot_fuckery" ) }output/`;
 
-        this.locationControl = container.resolve<LocationController>( "LocationController" );
+        this.locationLifecycleService = container.resolve<LocationLifecycleService>( "LocationLifecycleService" );
     }
 
     public preSptLoad( container: DependencyContainer ): void
@@ -72,6 +73,7 @@ class LootFuckery implements IPostDBLoadMod, IPreSptLoadMod
         const lootFile = path.resolve( __dirname, "../config/loot.jsonc" );
         this.lootConfig = jsonc.parse( this.vfs.readFile( lootFile ) );
 
+
         // run mod logic _after_ all mods have resolved
         onLoadModService.registerOnLoad
             (
@@ -80,6 +82,9 @@ class LootFuckery implements IPostDBLoadMod, IPreSptLoadMod
                 () => this.OnLoad( logger ),
                 () => "LootFuckery" // new route name
             );
+
+        //Skip doing real run data dumping for now. Its a PITA
+        /*
         if ( this.config.dataDumpRealRuns )
         {
             container.afterResolution( "LocationController", ( _t, result: LocationController ) => 
@@ -92,9 +97,10 @@ class LootFuckery implements IPostDBLoadMod, IPreSptLoadMod
                 // The modifier Always makes sure this replacement method is ALWAYS replaced
             }, { frequency: "Always" } );
         }
+        */
     }
 
-    private overrideGet( sessionId: string, request: IGetLocationRequestData, calledByMod = false ): ILocationBase 
+    /*private overrideGet( sessionId: string, request: IGetLocationRequestData, calledByMod = false ): ILocationBase 
     {
         //Original code 
         this.logger.debug( `Generating data for: ${ request.locationId }, variant: ${ request.variantId }` );
@@ -113,7 +119,7 @@ class LootFuckery implements IPostDBLoadMod, IPreSptLoadMod
         }
 
         return this.actualRunData;
-    }
+    }*/
 
     //leaves edition lmao. Hackiest shit on the planet. 
     // dict: ["string"]: { "total": number, "max": number }
@@ -207,16 +213,7 @@ class LootFuckery implements IPostDBLoadMod, IPreSptLoadMod
 
     private generateLoot( map: string ): any
     {
-        const accountID = "DOESN'T MATTER IN 3.8.3";
-        const request: IGetLocationRequestData =
-        {
-            crc: 0,
-            locationId: map,
-            variantId: 1
-        }
-
-        //return this.locationControl.get( accountID, request );
-        return this.overrideGet( accountID, request, true );
+        return this.locationLifecycleService.generateLocationAndLoot( map );
     }
 
     private getProbability( item: string, map: string ): number
@@ -321,7 +318,6 @@ class LootFuckery implements IPostDBLoadMod, IPreSptLoadMod
     private categorize( lootTable: any ): any 
     {
         const categoryTable = {};
-
 
         const tables = this.db.getTables();
         const locale = tables.locales.global[ this.config.localization ];
@@ -440,14 +436,18 @@ class LootFuckery implements IPostDBLoadMod, IPreSptLoadMod
 
     private generateMap( mapToGenerate: string ): void
     {
-        if ( this.actualRun )
+        /*if ( this.actualRun )
         {
             this.printColor( "[LootFuckery] Dumping Run", LogTextColor.YELLOW );
         }
         else
         {
             this.printColor( "[LootFuckery] Generating Run(s)", LogTextColor.YELLOW );
-        }
+        }*/
+
+        //Extracted from above.
+        this.printColor( "[LootFuckery] Generating Run(s)", LogTextColor.YELLOW );
+
         const tables = this.db.getTables();
 
         const items = tables.templates.items;
@@ -492,14 +492,13 @@ class LootFuckery implements IPostDBLoadMod, IPreSptLoadMod
             this.printColor( `[LootFuckery] Adjusting: ${ locationName }`, LogTextColor.YELLOW );
 
             const location = tables.locations[ locationName ];
-            location.looseLoot.spawnpointCount.mean *= this.lootConfig.mapSpecific[ locationName ].totalLootMultiplier; // <-- THIS DOESNT EXIST ANYMORE!?
+            location.looseLoot.spawnpointCount.mean *= this.lootConfig.mapSpecific[ locationName ].totalLootMultiplier;
 
             const spawnPoints = location.looseLoot.spawnpoints;
             for ( const point of spawnPoints )
             {
                 this.adjustPoint( point, locationName );
             }
-
         }
     }
 
