@@ -100,3 +100,7 @@ Config files from previous versions ARE compatible.
 - Set all loot values to 1.0 (no changes being made). This has been done because I don't plan to update relooted. The old config is still included.
 
 Old Config files ARE compatible.
+
+## 1.4.1
+- Updated to 3.10.0
+- Disabled data dumping real runs (for now at least)
