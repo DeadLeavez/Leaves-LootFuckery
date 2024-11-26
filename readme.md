@@ -104,3 +104,6 @@ Old Config files ARE compatible.
 ## 1.4.1
 - Updated to 3.10.0
 - Disabled data dumping real runs (for now at least)
+- Added a baseline ``loot.json`` that adjusts the vanilla experience in a direction I enjoy. You can use the ``loot - noadjust.jsonc`` (rename it) for a blank slate.
+
+Old Config files ARE compatible.

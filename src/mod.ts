@@ -571,14 +571,11 @@ class LootFuckery implements IPostDBLoadMod, IPreSptLoadMod
 
     private debugJsonOutput( jsonObject: any, label = "" )
     {
-        //if ( this.config.debug )
-        //{
         if ( label.length > 0 )
         {
             this.logger.logWithColor( `[${ label }]`, LogTextColor.GREEN );
         }
         this.logger.logWithColor( JSON.stringify( jsonObject, null, 4 ), LogTextColor.MAGENTA );
-        //}
     }
     private printColor( message: string, color: LogTextColor = LogTextColor.GREEN )
     {
