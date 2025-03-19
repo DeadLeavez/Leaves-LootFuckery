@@ -1,6 +1,6 @@
 {
     "name": "loot_fuckery",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "main": "src/mod.js",
     "license": "MIT",
     "author": "leaves",
@@ -8,6 +8,7 @@
     "scripts": {
         "setup": "npm i",
         "build": "node ./build.mjs",
+        "updatedeps": "npx tsc --module node16 updatedeps.ts && node updatedeps.js",
         "buildinfo": "node ./build.mjs --verbose"
     },
     "devDependencies": {

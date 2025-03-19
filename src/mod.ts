@@ -4,7 +4,7 @@ import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import type { JsonUtil } from "@spt/utils/JsonUtil";
 import type { TimeUtil } from "@spt/utils/TimeUtil";
 import type { DatabaseServer } from "@spt/servers/DatabaseServer";
-import type { VFS } from "@spt/utils/VFS"
+import { VFS } from "./deps/VFS"
 
 import { jsonc } from "jsonc";
 import * as path from "node:path";
@@ -65,7 +65,7 @@ class LootFuckery implements IPostDBLoadMod, IPreSptLoadMod
         const logger = container.resolve<ILogger>( "WinstonLogger" );
         const onLoadModService = container.resolve<OnLoadModService>( "OnLoadModService" );
 
-        this.vfs = container.resolve<VFS>( "VFS" );
+        this.vfs = new VFS();
 
         const configFile = path.resolve( __dirname, "../config/config.jsonc" );
         this.config = jsonc.parse( this.vfs.readFile( configFile ) );

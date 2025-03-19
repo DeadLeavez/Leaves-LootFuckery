@@ -107,3 +107,7 @@ Old Config files ARE compatible.
 - Added a baseline ``loot.json`` that adjusts the vanilla experience in a direction I enjoy. You can use the ``loot - noadjust.jsonc`` (rename it) for a blank slate.
 
 Old Config files ARE compatible.
+
+## 1.4.2
+- Updated to 3.11
+- Added new parents introduced in said patch.

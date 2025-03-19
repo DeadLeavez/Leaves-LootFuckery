@@ -74,7 +74,7 @@
         "5447b5fc4bdc2d87278b4567": { "multi": 1.00 }, //AssaultCarbines
         "5447bedf4bdc2d87278b4568": { "multi": 1.00 }, //GrenadeLauncher
 
-        "543be5cb4bdc2deb348b4568": { "multi": 1.40 }, //Ammobox
+        "543be5cb4bdc2deb348b4568": { "multi": 1.15 }, //Ammobox
         "5485a8684bdc2da71d8b4567": { "multi": 1.00 }, //Rounds
 
         "5448e8d04bdc2ddf718b4569": { "multi": 1.00 }, //Food
@@ -97,7 +97,10 @@
         "543be5dd4bdc2deb348b4569": { "multi": 1.00 }, //Money
         "62f109593b54472778797866": { "multi": 1.00 }, //RandomLootContainer
 
-        "616eb7aea207f41933308f46": { "multi": 1.50 } //Repair Kits
+        "616eb7aea207f41933308f46": { "multi": 1.50 }, //Repair Kits
+
+        "6759673c76e93d8eb20b2080": { "multi": 1.00 }, //Fliers
+        "63da6da4784a55176c018dba": { "multi": 1.00 } //Hideout Area Container ???
     },
     "globalItems": //2nd Priority
     {
@@ -154,18 +157,19 @@
 
         "interchange": //Interchange
         {
-            "totalLootMultiplier": 1.10,
+            "totalLootMultiplier": 1.5,
             "categories": //3rd Priority
             {
-                "5448e8d04bdc2ddf718b4569": { "multi": 1.20 }, //Food
-                "5448e8d64bdc2dce718b4568": { "multi": 1.20 }, //Drinks
-                "57864a3d24597754843f8721": { "multi": 1.20 }, //Jewelry
-                "5d1b385e86f774252167b98a": { "multi": 1.00 }, //Water Filter
-                "5d1b2fa286f77425227d1674": { "multi": 1.00 } //Electric Motor
+                "5448e8d04bdc2ddf718b4569": { "multi": 1.40 }, //Food
+                "5448e8d64bdc2dce718b4568": { "multi": 1.40 }, //Drinks
+                "57864a3d24597754843f8721": { "multi": 1.50 } //Jewelry
+
             },
             "items": //1st Priority (Highest)
             {
-                "5c12620d86f7743f8b198b72": { "multi": 1.00 } //Tetriz
+                "5c12620d86f7743f8b198b72": { "multi": 1.00 }, //Tetriz                
+                "5d1b385e86f774252167b98a": { "multi": 1.00 }, //Water Filter
+                "5d1b2fa286f77425227d1674": { "multi": 1.00 } //Electric Motor
             }
         },
 
@@ -190,11 +194,11 @@
 
         "lighthouse": //Lighthouse
         {
-            "totalLootMultiplier": 1.00,
+            "totalLootMultiplier": 1.05,
             "categories": //3rd Priority
             {
                 "5448f3a64bdc2d60728b456a": { "multi": 1.00 }, //Stimulator
-                "57864a66245977548f04a81f": { "multi": 1.00 }, //Electronics
+                "57864a66245977548f04a81f": { "multi": 1.20 }, //Electronics
                 "5448e8d04bdc2ddf718b4569": { "multi": 1.00 }, //Food
                 "5448e8d64bdc2dce718b4568": { "multi": 1.00 }, //Drinks
                 "57864e4c24597754843f8723": { "multi": 1.00 }, //Flammable materials (Lubricant)
@@ -208,11 +212,25 @@
 
         "rezervbase": //Reserv
         {
-            "totalLootMultiplier": 1.10,
+            "totalLootMultiplier": 1.75,
             "categories": //3rd Priority
             {
                 "57347c93245977448d35f6e3": { "multi": 1.00 }, //Revolver
-                "57864a66245977548f04a81f": { "multi": 2.10 } //Electronics
+                "57864c8c245977548867e7f1": { "multi": 1.50 }, //Medical Supplies
+                "5448f3a64bdc2d60728b456a": { "multi": 1.50 }, //Stimulator
+                "5448f3ac4bdc2dce718b4569": { "multi": 1.50 }, //Injury Treatments
+                "5448f39d4bdc2d0a728b4568": { "multi": 1.50 }, //Medkit
+                "5448f3a14bdc2d27728b4569": { "multi": 1.50 }, //Drugs
+                "5447bed64bdc2d97278b4568": { "multi": 1.50 }, //Machine Guns
+                "5447b6254bdc2dc3278b4568": { "multi": 1.50 }, //SnipersRifles
+                "5447b5e04bdc2d62278b4567": { "multi": 1.50 }, //Smgs
+                "5447b6094bdc2dc3278b4567": { "multi": 1.50 }, //Shotguns
+                "5447b5cf4bdc2d65278b4567": { "multi": 1.50 }, //Pistol
+                "617f1ef5e8b54b0998387733": { "multi": 1.50 }, //Revolver
+                "5447b6194bdc2d67278b4567": { "multi": 1.50 }, //MarksmanRifles
+                "5447b5f14bdc2d61278b4567": { "multi": 1.50 }, //AssaultRifles
+                "5447b5fc4bdc2d87278b4567": { "multi": 1.50 }, //AssaultCarbines
+                "57864a66245977548f04a81f": { "multi": 1.65 } //Electronics
             },
             "items": //1st Priority (Highest)
             {
@@ -237,7 +255,8 @@
             "totalLootMultiplier": 1.00,
             "categories": //3rd Priority
             {
-                "5c164d2286f774194c5e69fa": { "multi": 3.50 } //Keycards
+                "5c164d2286f774194c5e69fa": { "multi": 3.00 }, //Keycards
+                "5c99f98d86f7745c314214b3": { "multi": 1.00 } //MechanicalKeys
             },
             "items": //1st Priority (Highest)
             {
@@ -259,7 +278,7 @@
 
         "woods": //Woods
         {
-            "totalLootMultiplier": 1.00,
+            "totalLootMultiplier": 1.10,
             "categories": //3rd Priority
             {
                 "5c164d2286f774194c5e69fa": { "multi": 5.00 } //Keycards
@@ -272,7 +291,7 @@
 
         "sandbox": //Ground Zero
         {
-            "totalLootMultiplier": 1.00,
+            "totalLootMultiplier": 1.10,
             "categories": //3rd Priority
             {
 
@@ -284,7 +303,7 @@
         },
         "sandbox_high": //Ground Zero high level
         {
-            "totalLootMultiplier": 1.00,
+            "totalLootMultiplier": 1.10,
             "categories": //3rd Priority
             {
 
